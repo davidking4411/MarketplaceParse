@@ -76,10 +76,10 @@ except:
 	worksheet.append(['Title','Price','Location','Marketplace URL','Maps URL','Keywords'])
 max_row = worksheet.max_row
 
-input_string = input("Do you want to automatically fetch updated prices in an existing Excel file? y/n:")
-if input_string == 'y':
-	update_listings(workbook)
-	exit()
+#input_string = input("Do you want to automatically fetch updated prices in an existing Excel file? y/n:")
+#if input_string == 'y':
+#	update_listings(workbook)
+#	exit()
 
 print('Please download the html data from the marketplace webpage of your choice:')
 print('    Scroll to the end of relevant results')
