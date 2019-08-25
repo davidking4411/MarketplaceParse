@@ -11,7 +11,7 @@ Because Facebook makes it very apparent that they do not want users scraping the
 - Save the file in the same directory as this program
 
 Then run the program. 
-It will check for an existing Excel file of listing data and offer to use existing urls to go and fetch new prices.
+It will check for an existing Excel file of listing data and not offer to use existing urls to go and fetch new prices because that is against the rules.
 If there is no existing Excel file, it will create a new one.
 If you decline or if there is no local Excel file, it will ask if you want to use custom keywords to narrow the results to only include those with the keywords in the title. If you say yes, it will look for a local Excel file of results and read any saved keywords out of the file to ask if you would like to use those. If no, you can enter all new keywords. If yes, just press enter to begin the listing parsing.
 
