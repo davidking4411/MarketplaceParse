@@ -30,7 +30,6 @@ def update_listings(workbook):
 		except:
 			print('Error with listing',worksheet.cell(row = i, column = 1).value)
 			worksheet.cell(row = i, column = 7).value = 'Error parsing prices'
-			print(list(soup.body.find_all('script')))
 			continue
 		if worksheet.cell(row = i, column = 2).value != price: #price has changed so update price, add price history to last column, and color price red to notify user
 			if worksheet.cell(row = i, column = 1).value != None:
