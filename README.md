@@ -8,7 +8,7 @@ Because Facebook makes it very apparent that they do not want users scraping the
 - Scroll to the end of relevant results
 - Right click on a blank part of the page
 - Click "save-as"
-- Save the file in the same directory as this program
+- Save the file in the same directory as this program named 'marketplace.html'
 
 Then run the program. 
 It will check for an existing Excel file of listing data and not offer to use existing urls to go and fetch new prices because that is against the rules.
