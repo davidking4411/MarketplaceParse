@@ -50,18 +50,18 @@ def update_listings(workbook):
 
 
 print('\n---------------------------------------Marketplace-Scraper--------------------------------------\n')
-time.sleep(1)
+time.sleep(.3)
 print('A program to parse and save Facebook marketplace listings as well as track price changes over time.')
 print('Please rerun as frequently as you would like price updates.\n')
-time.sleep(1)
+time.sleep(.3)
 print('Written by David King this early morning of August the 23rd, 2019.\n')
-time.sleep(1)
+time.sleep(.3)
 
 geolocator = Nominatim(user_agent="specify_your_app_name_here")
 #home = geolocator.geocode('Dayton, OH')
 
 #define the path to the files (with two methods)
-path = 'G://My Drive/Documents/GDrivePython/'
+#path = 'G://My Drive/Documents/GDrivePython/'
 directory = str(os.path.dirname(__file__))+'/'
 wbname = 'marketbook.xlsx'
 
@@ -81,12 +81,12 @@ max_row = worksheet.max_row
 #	update_listings(workbook)
 #	exit()
 
-print('Please download the html data from the marketplace webpage of your choice:')
+print('Please download the html data from the marketplace search results of your choice:')
 print('    Scroll to the end of relevant results')
 print('    Right click on a blank part of the page')
 print('    Click \"save-as\"')
 print('    Save the file in the same directory as this program\n')
-time.sleep(1)
+time.sleep(.3)
 
 input_string = input("Do you want to use custom keywords? y/n:")
 if input_string == 'y':
@@ -100,10 +100,10 @@ if customkeywords:
 		keywordstring = worksheet.cell(row = 1, column = 7).value
 		keywordlist = keywordstring.split(',')
 		print('\nYour keywords saved in the local excel file are',keywordlist)
-		time.sleep(1)
+		time.sleep(.3)
 		print('If you do not want to change these keywords, simply press enter.')
 	except:
-		time.sleep(1)
+		time.sleep(.3)
 
 	input_string = input("Enter all new keywords of interest separated by a comma: ")
 	if input_string == '':
@@ -134,18 +134,22 @@ listings = soup.find_all('div',class_='_7yc _3ogd')
 redFill = PatternFill(start_color='FFFF0000',end_color='FFFF0000',fill_type='solid')
 # range through all html listings and if that html listing does not exist in the excel file, append it to the bottom
 for listing in listings:
-	listingfound = False
-	price = listing.a.div.div.text
-	title = listing.a.div.p.text
-	location = listing.a.div.span.text
-	# try: 
-	#     geolocation = geolocator.geocode(location)
-	#     distance = int(geodesic((home.latitude,home.longitude),(geolocation.latitude,geolocation.longitude)).miles)
-	# except: 
-	#     distance = ''
-	url = listing.a['href']
-	mapurl = "https://www.google.com/maps/place/"+location
-	dataarray = [title, price,location,url,mapurl]
+	try:
+		listingfound = False
+		price = listing.a.div.div.text
+		title = listing.a.div.p.text
+		location = listing.a.div.span.text
+		# try: 
+		#     geolocation = geolocator.geocode(location)
+		#     distance = int(geodesic((home.latitude,home.longitude),(geolocation.latitude,geolocation.longitude)).miles)
+		# except: 
+		#     distance = ''
+		url = listing.a['href']
+		mapurl = "https://www.google.com/maps/place/"+location
+		dataarray = [title, price,location,url,mapurl]
+	except:
+		print('Error with listing')
+		continue
 	if customkeywords: res = [ele for ele in keywordlist if (ele in title)]
 	else: res = True
 	#if 'ktm' in title or 'KTM' in title or 'Ktm' in title or 'Beta' in title or 'beta' in title or 'Husqvarna' in title or 'husqvarna' in title: # then we are interested in the html listing
@@ -172,8 +176,11 @@ rowstodelete = []
 for i in range(2, max_row+1):
 	listingfound = False
 	for listing in soup.find_all('div',class_='_7yc _3ogd'):
-		url = listing.a['href']
-		title = listing.a.div.p.text
+		try:
+			url = listing.a['href']
+			title = listing.a.div.p.text
+		except:
+			continue
 		try:
 			if customkeywords: res = [ele for ele in keywordlist if (ele in worksheet.cell(row = i, column = 1).value)]
 			else: res = True
